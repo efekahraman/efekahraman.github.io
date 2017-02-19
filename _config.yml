@@ -1,0 +1,25 @@
+gems:                [jekyll-paginate]
+
+permalink:           /:year/:month/:title
+
+title:               EFE KAHRAMAN
+tagline:             'Personal tech blog.'
+description:         'Personal tech blog.'
+url:                 http://efekahraman.github.io
+baseurl:             ''
+paginate:            5
+repo:                efekahraman.github.io
+
+author:
+  name:              Efe Kahraman
+  url:               http://efekahraman.github.io
+  email:             efekahraman@gmail.com
+
+version:             1.0.0
+social:
+  twitter:           efeuska
+  disqus:            efekahraman-github-io
+  github:            efekahraman
+
+google_analytics:
+  tracking_id:       UA-29622747-2

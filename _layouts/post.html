@@ -1,0 +1,38 @@
+---
+layout: default
+---
+
+<ul class="tags">
+  {% for tag in page.tags %}
+    <li><a href="{{ site.baseurl }}/tags#{{tag}}" class="tag">{{ tag }}</a></li>
+  {% endfor %}
+</ul>
+
+<div class="post">
+  <h1 class="post-title">{{ page.title }}</h1>
+  <span class="post-date">{{ page.date | date: '%B %Y' }} | Revision {{ page.revision }}</span>
+  {{ content }}
+</div>
+
+{% if page.license %}
+  <span class="post-date">License Information:</span>
+  All the content of this blog post is licensed under <a rel="license" href="http://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 International License</a>.
+  <hr/>
+{% endif %}
+
+<span class="post-date">Share this blog: </span>
+{% include twitter.html %}
+{% include google_plus.html %}
+{% include linkedin.html %}
+{% include reddit.html %}
+
+<div class="related">
+  <span class="post-date">Recent Posts: </span>
+  <ul class="related-posts">
+    {% for post in site.related_posts limit:3 %}
+      <li>
+          <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }} </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
