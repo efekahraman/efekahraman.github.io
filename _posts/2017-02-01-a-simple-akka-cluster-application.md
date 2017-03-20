@@ -2,9 +2,9 @@
 layout: post
 title: A Simple Akka Cluster Application
 comments: true
-tags: akka scala cluster routing
+tags: akka scala cluster routing load-balancing
 license: true
-revision: 1
+revision: 2
 ---
 
 <div class="message">
@@ -17,7 +17,7 @@ Akka Cluster is not new. So is load balancing. You can find some cool articles [
 
 ### <a name="Design"></a>Design
 
-The goal of the design is to have a cluster of _P_ x _C_ nodes where _P_ and _C_ denote the number of _Producer_ and _Consumer_ nodes respectively. As the number of nodes is not known in the beginning and can vary over time, it's useful to have a _Seed_ node to form the cluster. _Seed_ node is an actor system without any actor, and its existence is useful only when accepting newly created nodes to the cluster. To make _Seed_ node reachable, its address is fixed and predefined in all other nodes.
+The goal of the design is to have a cluster of _P_ x _C_ nodes where _P_ and _C_ denote the number of _Producer_ and _Consumer_ nodes respectively. As the number of nodes is not known in the beginning and can vary over time, it's useful to have a _Seed_ node to form the cluster. _Seed_ node is an actor system without any actor, and it's used as an entry point to the cluster for newly created nodes. To make _Seed_ node reachable, its address is fixed and predefined in all other nodes.
 
 When a _Consumer_ node is up, each _Producer_ is notified and start sending messages to the new node. To resolve the Consumer actor properly, I decided to go further with an assumption that every _Consumer_ node will have a single Consumer actor. However, _Consumer_ actor itself can behave as a "notifier" in its own actor system and pass messages to other local actors as well.
 
@@ -27,6 +27,7 @@ For example, 2 _Producer_ x 3 _Consumer_ cluster will look like as follows:
 
 <center><img src="{{ site.baseurl }}/public/media/1-Diagram.png" height="370" width="600"></center>
 
+It's worth mentioning that Akka has built-in [Cluster Aware Router](http://doc.akka.io/docs/akka/2.4/scala/cluster-usage.html#Cluster_Aware_Routers) which provides a Router mechanism aware of member nodes in the cluster. When used with *Group of Routees*, it covers the goal of this design either. That being said, I've implemented the whole mechanism in this project.
 
 ### Code
 
