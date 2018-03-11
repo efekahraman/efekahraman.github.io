@@ -5,6 +5,7 @@ comments: true
 tags: TAG1 TAG2
 license: true
 revision: 1
+math: false
 ---
 
 <div class="message">

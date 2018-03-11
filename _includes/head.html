@@ -22,4 +22,8 @@
   <link rel="shortcut icon" href="{{ site.baseurl }}/public/favicon.ico">
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  {% if page.math %}
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+  {% endif %}
 </head>

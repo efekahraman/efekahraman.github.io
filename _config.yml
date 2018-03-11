@@ -23,3 +23,6 @@ social:
 
 google_analytics:
   tracking_id:       UA-29622747-2
+
+markdown:            kramdown
+mathjax:             true
