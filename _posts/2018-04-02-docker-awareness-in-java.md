@@ -205,7 +205,7 @@ Cores       : 1
 Memory (Max): 123
 </div>
 
-It's working as expected. Also, it's worth to see this feature can be disabled via the `-XX:-UseContainerSupport` option (note that it starts with `-` after the `-XX:` suffix):
+It's working as expected. Also, it's worth to see this feature can be disabled via the `-XX:-UseContainerSupport` option (note that it starts with `-` after the `-XX:` prefix):
 
 <div class="console">$ docker run -c 512 -m 512MB -e JAVA_OPT=-XX:-UseContainerSupport 0636036af04d
 System properties
@@ -225,7 +225,7 @@ docker@default:~$ tar -zxvf openjdk-10_linux-x64_bin.tar.gz
 [TRUNCATED]
 </div>
 
-As the JDK 10 is now ready on the host machine, `jstack` command can be run using the PID which is visible in the host machine.
+As the JDK 10 is now ready, `jstack` command can be tested using the PID which is visible on the host machine.
 
 <div class="console">docker@default:~$ ps -ef | grep DockerTest
 root     10294 10279  0 00:47 ?        00:00:00 /bin/sh -c /jdk-10/bin/java ${JAVA_OPT} DockerTest
@@ -250,7 +250,7 @@ _java_thread_list=0x00007ff5c4002680, length=10, elements={
 [TRUNCATED]
 </div>
 
-It's important to mention that `10319` is the PID used on the host machine. For example, below output shows the actual PID inside of the container, which is different as expected.
+It's important to mention that `10319` is the PID visible on the host machine. For example, below output shows the actual PID inside of the container, which is different as expected (`5`).
 
 <div class="console">$ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
