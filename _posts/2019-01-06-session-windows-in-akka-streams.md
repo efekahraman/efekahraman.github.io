@@ -8,7 +8,7 @@ revision: 1
 ---
 
 <div class="message">
-  One liner summary
+  Below is a sample _session windows_ extension for the Akka Streams with some theoretical background information.
 </div>
 
 ### TL;DR
