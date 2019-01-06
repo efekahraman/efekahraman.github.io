@@ -8,7 +8,7 @@ revision: 1
 ---
 
 <div class="message">
-  Below is a sample _session windows_ extension for the Akka Streams with some theoretical background information.
+  Below is a sample session window extension for the Akka Streams with some theoretical background information.
 </div>
 
 ### TL;DR
