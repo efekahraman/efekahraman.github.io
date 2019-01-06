@@ -25,7 +25,7 @@ At the first stage, _Producer_ role will use Round Robin routing. However, routi
 
 For example, 2 _Producer_ x 3 _Consumer_ cluster will look like as follows:
 
-<center><img src="{{ site.baseurl }}/public/media/1-Diagram.png" height="370" width="600"></center>
+<center><img src="{{ site.baseurl }}/public/media/1-Diagram.png" height="320" width="640"></center>
 
 It's worth mentioning that Akka has built-in [Cluster Aware Router](http://doc.akka.io/docs/akka/2.4/scala/cluster-usage.html#Cluster_Aware_Routers) which provides a Router mechanism aware of member nodes in the cluster. When used with *Group of Routees*, it covers the goal of this design either. That being said, I've implemented the whole mechanism in this project.
 
