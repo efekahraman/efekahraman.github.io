@@ -5,13 +5,8 @@ comments: true
 tags: akka scala cluster routing load-balancing
 license: true
 revision: 2
+summary: This post explains a basic Akka Cluster application consisting of Producer and Consumer roles where each role runs on a separate node and it's own JVM.
 ---
-
-<div class="message">
-  Below is a simple Akka Cluster application consisting of <i>Producer</i> and <i>Consumer</i> roles where each role runs on a separate node and it's own JVM.
-</div>
-
-### TL;DR
 
 Akka Cluster is not new. So is load balancing. You can find some cool articles [here](http://freecontent.manning.com/akka-in-action-why-use-clustering/) and [here](http://blog.kamkor.me/Akka-Cluster-Load-Balancing/). Also, there’s a really nice sample at Akka’s own [GitHub repo](https://github.com/akka/akka-samples/tree/master/akka-sample-cluster-scala). In this post, I made a similar work and created a simple cluster application as it’s going to be the foundation of upcoming posts. You can get the project code from my [GitHub repo](https://github.com/efekahraman/akka-cluster-demo) as well.
 

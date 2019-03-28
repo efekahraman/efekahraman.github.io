@@ -6,6 +6,7 @@ tags: TAG1 TAG2
 license: true
 revision: 1
 math: false
+summary: ...
 ---
 
 <div class="message">

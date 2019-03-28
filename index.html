@@ -21,7 +21,7 @@ title: Index
 
     <span class="post-date">{{ post.date | date: '%B %Y' }}</span>
 
-    {{ post.content | strip_html | truncatewords:32 }}
+    {{ post.summary | strip_html | truncatewords:32 }}
     <p/><p><a href="{{ post.url }}">Continue reading...</a></p>
   </div>
   {% endfor %}

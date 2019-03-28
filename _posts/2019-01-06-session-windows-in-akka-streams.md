@@ -5,13 +5,8 @@ comments: true
 tags: akka scala window stream time flow
 license: true
 revision: 1
+summary: This post is a sample session window extension for the Akka Streams with some theoretical background information.
 ---
-
-<div class="message">
-  Below is a sample session window extension for the Akka Streams with some theoretical background information.
-</div>
-
-### TL;DR
 
 _Windowing_ is an important concept in _streaming_. [Streaming 101](https://www.oreilly.com/ideas/the-world-beyond-batch-streaming-101) is a great source for detailed information. There is also [an excellent blog post](https://softwaremill.com/windowing-data-in-akka-streams/) summarizing the idea supported by examples. In this post, I implemented a session based window as a custom operator in Akka Streams. You can get the source code from my [GitHub repo](https://github.com/efekahraman/akka-streams-session-window) as well.
 

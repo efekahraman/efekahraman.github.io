@@ -5,13 +5,8 @@ comments: true
 tags: java jvm docker memory cpu container
 license: true
 revision: 1
+summary: This post summarizes how the effects of the Docker containerization are handled in latest Java versions.
 ---
-
-<div class="message">
-  This post summarizes how the effects of the Docker containerization are handled in latest Java versions.
-</div>
-
-### TL;DR
 
 Starting from Java 8 update 131, a number of features are introduced to Java to improve getting the correct resource limits when running in a Docker containers. In this blog post, I experimented these features for each Java version (8, 9 and 10) under different container configurations.
 
