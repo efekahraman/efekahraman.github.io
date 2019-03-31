@@ -4,7 +4,7 @@ title: An Example of Free Monads and Optimization
 comments: true
 tags: scala cats free-monad optimization io state
 license: true
-revision: 1
+revision: 2
 summary: This post gives an example usage of Free Monad and how to make optimizations using Cats.
 ---
 
@@ -269,7 +269,7 @@ type FairRoutingIOState[T] = StateT[IO, Heap[TargetHost], T]
 val fairRoutingIO: Routing ~> FairRoutingIOState = new (Routing ~> FairRoutingIOState) {
   override def apply[A](fa: Routing[A]): FairRoutingIOState[A] = fa match {
     case AddHost(host) =>
-      StateT { state => IO.pure { state.add(TargetHost(host, 0L)) -> () } }
+      StateT { state => IO { state.add(TargetHost(host, 0L)) -> () } }
     case GetHost(payload) => StateT { state =>
       IO {
         state.getMin.fold[(Heap[TargetHost], Option[String])]
@@ -291,7 +291,7 @@ The only thing left is `networkIO` implementation. Let's mock it for this exampl
 def networkIO: Network ~> IO = new (Network ~> IO) {
   override def apply[A](fa: Network[A]): IO[A] = fa match {
     case Send(payload, host) =>
-      IO.pure { println(s"Sending ${payload.size} bytes to $host") }
+      IO { println(s"Sending ${payload.size} bytes to $host") }
   }
 }
 ```
@@ -308,10 +308,12 @@ As everything is in place, let's define `program2` and try to run it:
 ```scala
 implicit def routingTableI[F[_]](implicit I: InjectK[RoutingTable, F]): RoutingTableI[F] =
   new RoutingTableI[F]()
+
 implicit def networkI[F[_]](implicit I: InjectK[Network, F]): NetworkI[F] =
   new NetworkI[F]()
 
-def program2(implicit routingTable: RoutingTableI[App], network: NetworkI[App]): Free[App, Unit] = {
+def program2(implicit routingTable: RoutingTableI[App], network: NetworkI[App])
+  : Free[App, Unit] = {
   import routingTable._
   import network._
 
