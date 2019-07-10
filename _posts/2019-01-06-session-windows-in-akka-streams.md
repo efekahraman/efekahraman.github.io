@@ -4,7 +4,7 @@ title: Session Windows in Akka Streams
 comments: true
 tags: akka scala window stream time flow
 license: true
-revision: 1
+revision: 2 
 summary: This post is a sample session window extension for the Akka Streams with some theoretical background information.
 ---
 
@@ -254,6 +254,6 @@ Pretty self-explanatory!
 
 The presented code provides _session windows_ extension for the Akka Streams. When compared to other streaming platforms such as Apache Flink or Kafka Streams. it's not supported natively, however, it can be implemented very easily with the help of the custom stream processing infrastructure.
 
-Later on, I'll convert the [project code](https://github.com/efekahraman/akka-streams-session-window) to a library.
+Update: Project code is turned into a [library](https://github.com/efekahraman/akka-streams-session-window).
 
 Cheers!
