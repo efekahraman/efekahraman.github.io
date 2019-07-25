@@ -304,7 +304,7 @@ Benchmark report will give scores as average operation times in seconds. Here's 
 [info] BenchmarkTests.transformersBenchmark  avgt   10  0.003 ±  0.001   s/op
 </div>
 
-We observe similar performance characteristics. This is because we materialize `F[_]` over the monad transformer stack. However, this is not the only way while using the Cats MTL type classes. Another nice thing about Cats MTL is that there's a clear separation between 2 aspects it consists of definition of type classes and interpretation. Performance can be improved with different interpreters.
+We observe similar performance characteristics. This is because we materialize `F[_]` over the monad transformer stack. However, this is not the only way while using the Cats MTL type classes. Another nice thing about Cats MTL is that there's a clear separation between 2 aspects it consists of: definition of type classes and interpretation. As you can see, program logic can be implemented without providing the interpreter. So that performance can be improved with different interpreters.
 
 ## Conclusion
 
