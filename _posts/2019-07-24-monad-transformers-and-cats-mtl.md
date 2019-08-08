@@ -4,7 +4,7 @@ title: Monad Transformers and Cats MTL
 comments: true
 tags: scala cats mtl monad-transformer state reader
 license: true
-revision: 1
+revision: 2
 summary: This post shows benefits of Cats MTL library with an example developed from monad transformers.
 ---
 
@@ -112,11 +112,11 @@ This was the first part of the requirements. Question is, how to add the query c
 type UserQueryCount = Map[UserId, Long]
 ```
 
-Next is to define `StateTReaderTOption`, which encapsulates `ReaderTEither`. Here I've used `kind-projector` plugin to make types more readable. In the following type definition, we need to keep `ReaderTEither` as a container with a single type variable, which is achieved by type lambda (`?`).
+Next is to define `StateTReaderTEither`, which encapsulates `ReaderTEither`. Here I've used `kind-projector` plugin to make types more readable. In the following type definition, we need to keep `ReaderTEither` as a container with a single type variable, which is achieved by type lambda (`?`).
 
 ```scala
 import cats.data.StateT
-type StateTReaderTOption[A, B] = StateT[ReaderTEither[A, ?], UserQueryCount, B]
+type StateTReaderTEither[A, B] = StateT[ReaderTEither[A, ?], UserQueryCount, B]
 ```
 
 Having this new type, now we can rewrite the `Service` class with utilising provided `UserQueryCount` state. Before let's define `QueryResult` type which is a product of user and how many times it's queried so far.
@@ -125,7 +125,7 @@ Having this new type, now we can rewrite the `Service` class with utilising prov
 type QueryResult = (User, Long)
 
 trait Service {
-  def query(id: UserId): StateTReaderTOption[Db, QueryResult] = for {
+  def query(id: UserId): StateTReaderTEither[Db, QueryResult] = for {
     queryCounts <- StateT.get[ReaderTEither[Db, ?], UserQueryCount]
     count       =  queryCounts.getOrElse(id, 0L) + 1L
     _           <- StateT.set[ReaderTEither[Db, ?], UserQueryCount] {
@@ -141,13 +141,13 @@ trait Service {
 }
 ```
 
-Let's go step by step. The return type is `QueryResult` wrapped in `StateTReaderTOption`. Inside the for comprehension, first 3 line gets the _state_ (binding to `queryCounts`), increments the `count` by `1` and sets the _state_ with updated `Map`. Notice the **noise** around the types while calling the `get` and `set` functions on `StateT`. Next line queries the `Db`, constructs `QueryResult` by mapping over `EitherFailure[User]`, and wraps the value in `ReaderT`. Finally, `StateT` is constructed via `apply` taking `f: UserQueryCount => ReaderTEither[Db, (UserQueryCount, QueryResult)]`.
+Let's go step by step. The return type is `QueryResult` wrapped in `StateTReaderTEither`. Inside the for comprehension, first 3 line gets the _state_ (binding to `queryCounts`), increments the `count` by `1` and sets the _state_ with updated `Map`. Notice the **noise** around the types while calling the `get` and `set` functions on `StateT`. Next line queries the `Db`, constructs `QueryResult` by mapping over `EitherFailure[User]`, and wraps the value in `ReaderT`. Finally, `StateT` is constructed via `apply` taking `f: UserQueryCount => ReaderTEither[Db, (UserQueryCount, QueryResult)]`.
 
 Again, what happens if the user with given id not found? For comprehension will short-circuit while performing the query on `Db`. So we have all the effects in one place. Here's `Program2` using the `Service` created above.
 
 ```scala
 object Program2 extends Service {
-  def result: StateTReaderTOption[Db, QueryResult] = for {
+  def result: StateTReaderTEither[Db, QueryResult] = for {
     _  <- query(1L)
     _  <- query(1L)
     u2 <- query(2L)
@@ -217,7 +217,7 @@ Now let's run the `Program3` and see what happens.
 
 ```scala
 object Program3 extends Service {
-  def result: StateTReaderTOption[Db, QueryResult] = for {
+  def result: StateTReaderTEither[Db, QueryResult] = for {
     _  <- materializedQuery(1L)
     _  <- materializedQuery(1L)
     u2 <- materializedQuery(2L)
